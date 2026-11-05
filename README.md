@@ -147,9 +147,9 @@ Bars show mean depth for five autosomes (NC_007418.3, NC_007422.5, NC_007424.3, 
 
 **Figure 10.** NCBI BioSample record for the WGS sample SAMN33549348.
 
-The record describes a Tribolium castaneum (red flour beetle) sample, strain GA2, adult, whole organism (SRA: SRS16920646; BioProject PRJNA606031). The sex attribute is listed as “pooled male and female”. This is the metadata used to compare with the X:A ratio in Part E.
+The record describes a Tribolium castaneum (red flour beetle) sample, strain GA2, adult, whole organism (SRA: SRS16920646; BioProject PRJNA606031). The sex attribute is listed as “pooled male and female”. This is the metadata used to compare with the X:A ratio in Part E;
 
-The X:A ratio is 0.70, from a median autosome depth of 2.838× and an LGX depth of 1.986×. This falls between the XY-like cutoff (≤0.65) and the XX-like cutoff (≥0.80), so the script's call is "Ambiguous". The WGS BioSample lists the sex as "pooled male and female", so the reads came from a mix of both sexes and the ratio is expected to fall between 0.5 and 1.0. The result is therefore inconclusive for a single-sex call and consistent with a mixed-sex pool. A ratio of 0.70 would fit roughly 40% females, but this is only a rough estimate at such low coverage.
+Where the X:A ratio is 0.70, from a median autosome depth of 2.838× and an LGX depth of 1.986×. This falls between the XY-like cutoff (≤0.65) and the XX-like cutoff (≥0.80), so the script's call is "Ambiguous". The WGS BioSample lists the sex as "pooled male and female", so the reads came from a mix of both sexes and the ratio is expected to fall between 0.5 and 1.0. The result is therefore inconclusive for a single-sex call and consistent with a mixed-sex pool. A ratio of 0.70 would fit roughly 40% females, but this is only a rough estimate at such low coverage.
 
 ## Questions for the report
 
