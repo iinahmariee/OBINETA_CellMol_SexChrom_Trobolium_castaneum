@@ -67,8 +67,8 @@ The five autosomal accessions — NC_004353.4, NT_033777.3, NT_033778.4, NT_0337
 
 ### R SCRIPT: sex_depth_analysis.R
 
-# Sex-chromosome dosage from whole-genome DNA read depth
-# Input: Samtools coverage TSV + student chromosome labels
+#Sex-chromosome dosage from whole-genome DNA read depth
+#Input: Samtools coverage TSV + student chromosome labels
 cov <- read.delim("chromosome_coverage.tsv", comment.char = "",
                   check.names = FALSE, stringsAsFactors = FALSE)
 names(cov)[1] <- "rname"  # Accepts the '#rname' header
@@ -104,12 +104,12 @@ ratio <- x$relative_depth[x$group == target]
 call <- if (ratio >= 0.80) two_copies else if (ratio <= 0.65) one_copy else "Ambiguous"
 if (A < 1) call <- "Inconclusive: very low autosomal depth"
 
-# Additional Y or W evidence can support, but not prove, a call
+#Additional Y or W evidence can support, but not prove, a call
 partner <- if (target == "X") "Y" else "W"
 partner_ratio <- if (partner %in% x$group)
   x$relative_depth[x$group == partner][1] else NA_real_
 
-# Export results and a simple, reproducible figure
+#Export results and a simple, reproducible figure
 dir.create("results", showWarnings = FALSE)
 write.csv(x, "results/chromosome_relative_depth.csv", row.names = FALSE)
 png("results/chromosome_depth.png", width = 1000, height = 580)
@@ -128,13 +128,17 @@ summary <- c(paste("Median autosome depth:", round(A, 3)),
 writeLines(summary, "results/sex_inference.txt")
 cat(paste(summary, collapse = "\n"), "\n")
 
+
 <img width="1918" height="1020" alt="08_R_Analysis_Output" src="https://github.com/user-attachments/assets/4bc7c835-6c17-43e9-950b-2809d56e6c65" />
 
-**Figure 8.** R analysis of sex-chromosome dosage in Tribolium castaneum (Tcas5.2). RStudio run of sex_depth_analysis.R on chromosome_coverage.tsv and chromosome_groups.csv (5 autosomes, the X and one Y scaffold). The median autosome depth was 2.838×. LGX (NC_007416.3) had an X/A ratio of 0.70, so the script’s call was “Ambiguous”, between the XY-like (≤0.65) and XX-like (≥0.80) cutoffs. The Y/A ratio was 0.157, calculated from a single unlocalized Y scaffold (NW_015450210.1, the largest of the 26 LGY scaffolds), since Tcas5.2 has no assembled Y chromosome. This Y value is supporting evidence only.
+**Figure 8.** R analysis of sex-chromosome dosage in Tribolium castaneum (Tcas5.2). 
+
+RStudio run of sex_depth_analysis.R on chromosome_coverage.tsv and chromosome_groups.csv (5 autosomes, the X and one Y scaffold). The median autosome depth was 2.838×. LGX (NC_007416.3) had an X/A ratio of 0.70, so the script’s call was “Ambiguous”, between the XY-like (≤0.65) and XX-like (≥0.80) cutoffs. The Y/A ratio was 0.157, calculated from a single unlocalized Y scaffold (NW_015450210.1, the largest of the 26 LGY scaffolds), since Tcas5.2 has no assembled Y chromosome. This Y value is supporting evidence only.
 
 <img width="1000" height="580" alt="chromosome_depth" src="https://github.com/user-attachments/assets/ece53361-acdb-4484-a7e4-cfdc8da12c8a" />
 
 **Figure 9.** Depth of each chromosome relative to the median autosome.
+
 Bars show mean depth for five autosomes (NC_007418.3, NC_007422.5, NC_007424.3, NC_007420.3, NC_007417.3), the X chromosome LGX (NC_007416.3), and one unlocalized Y scaffold (NW_015450210.1), each divided by the median autosome depth (2.838×). Dashed lines mark 0.5 (one copy) and 1.0 (two copies). The autosomes cluster near 1.0. The X bar sits at about 0.70, between the one-copy and two-copy expectations, so the script’s call is “Ambiguous”. The Y scaffold bar is about 0.16, but it represents only one of 26 small, unlocalized Y fragments, so it is weak supporting evidence only.
 
 ## Part E. Interpret your results
@@ -142,6 +146,7 @@ Bars show mean depth for five autosomes (NC_007418.3, NC_007422.5, NC_007424.3, 
 <img width="1308" height="900" alt="09_Record_of_WGSsample" src="https://github.com/user-attachments/assets/254806a0-1f2c-40a2-a039-bb71fb1a3369" />
 
 **Figure 10.** NCBI BioSample record for the WGS sample SAMN33549348.
+
 The record describes a Tribolium castaneum (red flour beetle) sample, strain GA2, adult, whole organism (SRA: SRS16920646; BioProject PRJNA606031). The sex attribute is listed as “pooled male and female”. This is the metadata used to compare with the X:A ratio in Part E.
 
 The X:A ratio is 0.70, from a median autosome depth of 2.838× and an LGX depth of 1.986×. This falls between the XY-like cutoff (≤0.65) and the XX-like cutoff (≥0.80), so the script's call is "Ambiguous". The WGS BioSample lists the sex as "pooled male and female", so the reads came from a mix of both sexes and the ratio is expected to fall between 0.5 and 1.0. The result is therefore inconclusive for a single-sex call and consistent with a mixed-sex pool. A ratio of 0.70 would fit roughly 40% females, but this is only a rough estimate at such low coverage.
