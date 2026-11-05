@@ -21,29 +21,27 @@ Select one unique animal species; find an NCBI chromosome-level nuclear genome a
 
 ## Part B. Retrieve data and map reads in Galaxy
 
-> **Important:** If your reference lacks an annotated X or Z chromosome, or if mapping fails, do not invent chromosome categories or a sex call. Report the limitation and select another eligible species with the instructor.
-
-![Figure 1](figures/figure1.png)
+<img width="1918" height="850" alt="01_Galaxy_Fasta SRR_Upload" src="https://github.com/user-attachments/assets/4c088c4f-b6a5-4d04-abe9-7f4e91126013" />
 
 **Figure 1.** Galaxy history showing the uploaded Tcas5.2 reference FASTA and the queued SRA download (fasterq-dump) of the paired-end WGS run SRR23651710.
 
-![Figure 2](figures/figure2.png)
+<img width="1918" height="852" alt="02_Galaxy_Completed_FastQC_forward reverse" src="https://github.com/user-attachments/assets/d1c59cef-6696-4933-8480-b8592855a83c" />
 
 **Figure 2.** Galaxy history showing completed FastQC jobs (Webpage and RawData outputs) for the forward and reverse reads of SRR23651710.
 
-![Figure 3](figures/figure3.png)
+<img width="1912" height="857" alt="03_FastQC_Adapter_Content_Forward" src="https://github.com/user-attachments/assets/7ed6726b-97f4-43ae-9e51-294194d5f738" />
 
 **Figure 3.** FastQC adapter content for the forward reads of SRR23651710 (FastQC on Tribolium castaneum: forward). The adapter content check passed. No Illumina Universal, Illumina Small RNA, Nextera, poly-A or poly-G sequences were detected at any position (about 0%), so no adapter trimming was needed.
 
-![Figure 4](figures/figure4.png)
+<img width="1915" height="862" alt="04_FastQC_Adapter_Content_reverse" src="https://github.com/user-attachments/assets/6af60553-3c02-41d4-8762-5ba795e250f6" />
 
 **Figure 4.** FastQC adapter content for the reverse reads of SRR23651710 (FastQC on Tribolium castaneum: reverse). The adapter content check passed. No adapter or poly-A/poly-G contamination was detected along the reads (about 0% at every position), so no adapter trimming was needed.
 
-![Figure 5](figures/figure5.png)
+<img width="1918" height="853" alt="05_BWA-MEM_BAM_Output" src="https://github.com/user-attachments/assets/ddd40f6f-e238-4054-8576-77be4cc9b845" />
 
 **Figure 5.** BAM output (dataset 21, 598.7 MB) from the Map with BWA-MEM tool (version 0.7.19+galaxy1), aligning SRR23651710 to the icTriCast1.1 reference from the history, sorted by chromosomal coordinates.
 
-![Figure 6](figures/figure6.png)
+<img width="1918" height="852" alt="06_Samtools_Coverage_Output" src="https://github.com/user-attachments/assets/4ffcbdc6-4bc2-415e-a0e5-682d26c2207c" />
 
 **Figure 6.** Samtools coverage table (tabular output, MAPQ ≥ 20, BASEQ ≥ 20) showing mean depth per chromosome and scaffold for SRR23651710 mapped to icTriCast1.1.
 
@@ -63,17 +61,12 @@ The five autosomal accessions — NC_004353.4, NT_033777.3, NT_033778.4, NT_0337
 
 ## Part D. Run the R analysis
 
-Install R, open RStudio or VS Code, and create a folder containing `chromosome_coverage.tsv` and `chromosome_groups.csv`. Copy the complete code below into `sex_depth_analysis.R` in that folder. Open a terminal in the same folder and run: `Rscript sex_depth_analysis.R`
-
-This script uses base R and does not need an extra R package.
-
-![Figure 7](figures/figure7.png)
+<img width="1918" height="1018" alt="07_Folder_Galaxy_Output" src="https://github.com/user-attachments/assets/c6ac9de8-8e34-4be7-897a-b36b9a217bcb" />
 
 **Figure 7.** Project folder for the R analysis in Part D. The Tribolium castaneum folder holds the Galaxy output chromosome_coverage.tsv, the chromosome labels chromosome_groups.csv, the script sex_depth_analysis.R, and the results folder the script created.
 
 ### R SCRIPT: sex_depth_analysis.R
 
-```r
 # Sex-chromosome dosage from whole-genome DNA read depth
 # Input: Samtools coverage TSV + student chromosome labels
 cov <- read.delim("chromosome_coverage.tsv", comment.char = "",
@@ -134,20 +127,19 @@ summary <- c(paste("Median autosome depth:", round(A, 3)),
              "Compare with BioSample sex and discuss limitations.")
 writeLines(summary, "results/sex_inference.txt")
 cat(paste(summary, collapse = "\n"), "\n")
-```
 
-![Figure 8](figures/figure8.png)
+<img width="1918" height="1020" alt="08_R_Analysis_Output" src="https://github.com/user-attachments/assets/4bc7c835-6c17-43e9-950b-2809d56e6c65" />
 
 **Figure 8.** R analysis of sex-chromosome dosage in Tribolium castaneum (Tcas5.2). RStudio run of sex_depth_analysis.R on chromosome_coverage.tsv and chromosome_groups.csv (5 autosomes, the X and one Y scaffold). The median autosome depth was 2.838×. LGX (NC_007416.3) had an X/A ratio of 0.70, so the script’s call was “Ambiguous”, between the XY-like (≤0.65) and XX-like (≥0.80) cutoffs. The Y/A ratio was 0.157, calculated from a single unlocalized Y scaffold (NW_015450210.1, the largest of the 26 LGY scaffolds), since Tcas5.2 has no assembled Y chromosome. This Y value is supporting evidence only.
 
-![Figure 9](results/chromosome_depth.png)
+<img width="1000" height="580" alt="chromosome_depth" src="https://github.com/user-attachments/assets/ece53361-acdb-4484-a7e4-cfdc8da12c8a" />
 
 **Figure 9.** Depth of each chromosome relative to the median autosome.
 Bars show mean depth for five autosomes (NC_007418.3, NC_007422.5, NC_007424.3, NC_007420.3, NC_007417.3), the X chromosome LGX (NC_007416.3), and one unlocalized Y scaffold (NW_015450210.1), each divided by the median autosome depth (2.838×). Dashed lines mark 0.5 (one copy) and 1.0 (two copies). The autosomes cluster near 1.0. The X bar sits at about 0.70, between the one-copy and two-copy expectations, so the script’s call is “Ambiguous”. The Y scaffold bar is about 0.16, but it represents only one of 26 small, unlocalized Y fragments, so it is weak supporting evidence only.
 
 ## Part E. Interpret your results
 
-![Figure 10](figures/figure10.png)
+<img width="1308" height="900" alt="09_Record_of_WGSsample" src="https://github.com/user-attachments/assets/254806a0-1f2c-40a2-a039-bb71fb1a3369" />
 
 **Figure 10.** NCBI BioSample record for the WGS sample SAMN33549348.
 The record describes a Tribolium castaneum (red flour beetle) sample, strain GA2, adult, whole organism (SRA: SRS16920646; BioProject PRJNA606031). The sex attribute is listed as “pooled male and female”. This is the metadata used to compare with the X:A ratio in Part E.
@@ -179,6 +171,10 @@ The BioSample records the sex as “pooled male and female”, so there is no si
 **6. Why is a chromosome-level assembly alone insufficient for a reliable read-depth sex inference?**
 
 An assembly is a map of the chromosomes. It shows what chromosomes exist and how long they are, but not how many copies a particular animal carry. That only shows up when reads from the sample are mapped back to the assembly and the X depth is compared with the autosomal depth. Without reads there is nothing to measure. Chromosome lengths or sequences alone can’t give a dosage ratio, and the result also depends on the sample’s own sex and donor, which the assembly doesn’t record.
+
+## Limitations
+
+The main limitation is low coverage. The median autosome depth is only about 2.8×, so the depth of each chromosome is noisy and the X:A ratio of 0.70 is imprecise. The WGS BioSample is also a "pooled male and female" sample, so a single XX or XY ratio was not expected, and the value falls between the XY (about 0.5) and XX (about 1.0) expectations. The reads come from a different BioSample than the reference assembly, so strain or individual differences can affect mapping. Tcas5.2 has no assembled Y chromosome, so the Y is represented only by small unlocalized scaffolds. The Y/A ratio of 0.157 comes from a single scaffold (NW_015450210.1) and is weak supporting evidence only. The X chromosome is repeat-rich, and reads that map poorly or to several places can distort depth, while pseudoautosomal regions shared between the X and Y can also change the ratio. Finally, the X:A ratio sits between the script's cutoffs, which are teaching guidelines and not diagnostic thresholds, so the sex-chromosome complement is inconclusive.
 
 ## Methods and resources
 
